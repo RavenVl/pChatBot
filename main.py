@@ -23,7 +23,10 @@ def filter(text: str):
 
 
 def match(text, example):
-    pass
+    if match(text) == match(example):
+        return True
+    else:
+        return False
 
 
 def get_intent(text):
