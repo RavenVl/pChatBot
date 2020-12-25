@@ -1,3 +1,6 @@
+import re
+
+
 BOT_CONFIG = {
     'intents': {
         'hello': {
@@ -8,13 +11,24 @@ BOT_CONFIG = {
             'examples': ['пока', 'досвидания', 'прощай'],
             'response': ['счастливо', 'если чего возвращайся', ]
         }
-    }
+    },
+    'failure_phrases': ['Ничего не понятно', 'Чего, чего?']
 }
 
 
-def get_intent(text):
+def filter(text: str):
+   
+
+
+def match(text, example):
     pass
+
+
+def get_intent(text):
+    for intent, data in BOT_CONFIG['intents'].items():
+        if text in data['examples']:
+            return intent
 
 
 if __name__ == '__main__':
-    pass
+    get_intent('здравствуйте')
