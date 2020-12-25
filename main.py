@@ -23,7 +23,7 @@ def filter(text: str):
 
 
 def match(text, example):
-    if match(text) == match(example):
+    if filter(text) == filter(example):
         return True
     else:
         return False
@@ -31,10 +31,11 @@ def match(text, example):
 
 def get_intent(text):
     for intent, data in BOT_CONFIG['intents'].items():
-        if text in data['examples']:
-            return intent
+        for ask in data['examples']:
+            if match(text, ask):
+                return intent
 
 
 if __name__ == '__main__':
-    get_intent('здравствуйте')
-    filter('здравствуйте q - !@#')
+    print(get_intent('прощай'))
+
