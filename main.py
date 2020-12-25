@@ -1,5 +1,5 @@
 import re
-
+import nltk
 
 BOT_CONFIG = {
     'intents': {
@@ -23,7 +23,8 @@ def filter(text: str):
 
 
 def match(text, example):
-    if filter(text) == filter(example):
+    nltk.edit_distance(filter(text), filter(example))
+    if nltk.edit_distance(filter(text), filter(example)) <= 2:
         return True
     else:
         return False
