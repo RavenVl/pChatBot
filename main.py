@@ -17,7 +17,9 @@ BOT_CONFIG = {
 
 
 def filter(text: str):
-   
+    text = text.lower()
+    return ''.join(re.findall(r'\w|-| ', text))
+
 
 
 def match(text, example):
@@ -32,3 +34,4 @@ def get_intent(text):
 
 if __name__ == '__main__':
     get_intent('здравствуйте')
+    filter('здравствуйте q - !@#')
