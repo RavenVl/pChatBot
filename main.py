@@ -1,4 +1,4 @@
-import re
+import re, random
 import nltk
 
 BOT_CONFIG = {
@@ -9,7 +9,7 @@ BOT_CONFIG = {
         },
         'bay': {
             'examples': ['пока', 'досвидания', 'прощай'],
-            'response': ['счастливо', 'если чего возвращайся', ]
+            'response': ['счастливо', 'если чего возвращайся', 'bay, bay', 'good bay']
         }
     },
     'failure_phrases': ['Ничего не понятно', 'Чего, чего?']
@@ -21,10 +21,10 @@ def filter(text: str):
     return ''.join(re.findall(r'\w|-| ', text))
 
 
-
 def match(text, example):
     nltk.edit_distance(filter(text), filter(example))
-    if nltk.edit_distance(filter(text), filter(example)) <= 2:
+    distance = nltk.edit_distance(filter(text), filter(example)) / len(example)
+    if distance < 0.4:
         return True
     else:
         return False
@@ -36,7 +36,8 @@ def get_intent(text):
             if match(text, ask):
                 return intent
 
+def get_answer_by_intent(intent):
+    return random.choice(BOT_CONFIG['intents'][intent]['response'])
 
 if __name__ == '__main__':
-    print(get_intent('прощай'))
-
+    print(get_answer_by_intent('bay'))
