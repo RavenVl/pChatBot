@@ -1,23 +1,7 @@
 import re, random
 import nltk
-
-BOT_CONFIG = {
-    'intents': {
-        'hello': {
-            'examples': ['привет', 'добрый день', 'здравствуйте'],
-            'response': ['привет человек', 'доброго времени суток']
-        },
-        'bay': {
-            'examples': ['пока', 'досвидания', 'прощай'],
-            'response': ['счастливо', 'если чего возвращайся', 'bay, bay', 'good bay']
-        },
-        'whatsup': {
-            'examples': ['как дела', 'чо как', 'как ты'],
-            'response': ['норм', 'все ок', 'пока живой', 'все отлично']
-        }
-    },
-    'failure_phrases': ['Ничего не понятно', 'Чего, чего?']
-}
+from bot_config import get_bot_config
+BOT_CONFIG = get_bot_config()
 
 
 def filter(text: str):
@@ -42,7 +26,7 @@ def get_intent(text):
 
 
 def get_answer_by_intent(intent):
-    return random.choice(BOT_CONFIG['intents'][intent]['response'])
+    return random.choice(BOT_CONFIG['intents'][intent]['responses'])
 
 
 def bot(text):
