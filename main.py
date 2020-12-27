@@ -2,8 +2,9 @@ import re, random
 import nltk
 from bot_config import get_bot_config
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 BOT_CONFIG = get_bot_config()
 x_input = []
@@ -61,12 +62,53 @@ def bot(text):
     # вернуть случайную фразу
     return random.choice(BOT_CONFIG['failure_phrases'])
 
+def start(update: Update, context: CallbackContext) -> None:
+    """Send a message when the command /start is issued."""
+    update.message.reply_text('Hi!')
+
+
+def help_command(update: Update, context: CallbackContext) -> None:
+    """Send a message when the command /help is issued."""
+    update.message.reply_text('Help!')
+
+
+def echo(update: Update, context: CallbackContext) -> None:
+    """Echo the user message."""
+    update.message.reply_text(bot(update.message.text))
+
+
+def main():
+    """Start the bot."""
+    # Create the Updater and pass it your bot's token.
+    # Make sure to set use_context=True to use the new context based callbacks
+    # Post version 12 this will no longer be necessary
+    updater = Updater("1410218579:AAHFAJBLQcS8QydR5yeS28R3q9gjLA1WZqA", use_context=True)
+
+    # Get the dispatcher to register handlers
+    dispatcher = updater.dispatcher
+
+    # on different commands - answer in Telegram
+    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(CommandHandler("help", help_command))
+
+    # on noncommand i.e message - echo the message on Telegram
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+
+    # Start the Bot
+    updater.start_polling()
+
+    # Run the bot until you press Ctrl-C or the process receives SIGINT,
+    # SIGTERM or SIGABRT. This should be used most of the time, since
+    # start_polling() is non-blocking and will stop the bot gracefully.
+    updater.idle()
+
 
 if __name__ == '__main__':
-    req = ''
-    while True:
-        req = input('--')
-        if req in ['выход', 'достал']:
-            break
-        print(bot(req))
-    # use_mo()
+    # req = ''
+    # while True:
+    #     req = input('--')
+    #     if req in ['выход', 'достал']:
+    #         break
+    #     print(bot(req))
+    main()
+
