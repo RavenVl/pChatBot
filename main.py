@@ -69,11 +69,11 @@ def start(update: Update, context: CallbackContext) -> None:
 
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
+    update.message.reply_text('Use request and receive answer')
 
 
 def echo(update: Update, context: CallbackContext) -> None:
-    """Echo the user message."""
+    """Answer to user  message"""
     update.message.reply_text(bot(update.message.text))
 
 
@@ -104,11 +104,5 @@ def main():
 
 
 if __name__ == '__main__':
-    # req = ''
-    # while True:
-    #     req = input('--')
-    #     if req in ['выход', 'достал']:
-    #         break
-    #     print(bot(req))
     main()
 
