@@ -1,10 +1,13 @@
-import re, random
+import random
+import re
+
 import nltk
-from bot_config import get_bot_config
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import LinearSVC
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+
+from bot_config import get_bot_config, get_sec_key
 
 BOT_CONFIG = get_bot_config()
 x_input = []
@@ -82,7 +85,7 @@ def main():
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    updater = Updater("1410218579:AAHFAJBLQcS8QydR5yeS28R3q9gjLA1WZqA", use_context=True)
+    updater = Updater(get_sec_key(), use_context=True)
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
