@@ -1,6 +1,7 @@
 import unittest
 import main
 
+
 class TestBot(unittest.TestCase):
 
     def test_filter(self):
@@ -11,6 +12,7 @@ class TestBot(unittest.TestCase):
 
     def test_intent(self):
         self.assertEqual(main.get_intent('привет!!!'), 'hello')
+
 
 if __name__ == '__main__':
     unittest.main()
